@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fceabb, #f8b500);
+            min-height: 100vh;
+            padding: 80px 20px 40px;
+            color: #3a2e0f;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #6b3e00;
+            color: white;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 4px 8px rgba(107, 62, 0, 0.6);
+            z-index: 100;
+        }
+
+        header h1 {
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            font-size: 24px;
+        }
+
+        header nav a {
+            color: #f9d571;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 25px;
+            transition: color 0.3s ease;
+            font-size: 17px;
+        }
+
+        header nav a:hover {
+            color: #fff3b0;
+            text-decoration: underline;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #6b3e00;
+            padding-bottom: 8px;
+            letter-spacing: 1.1px;
+        }
+
+        /* Dish grid */
+        .dish-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .dish-card {
+            background: #fff9f0;
+            border-radius: 16px;
+            box-shadow: 0 8px 15px rgba(107, 62, 0, 0.15);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dish-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 30px rgba(107, 62, 0, 0.3);
+        }
+
+        .dish-card img {
+            border-radius: 12px;
+            object-fit: cover;
+            height: 150px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(107, 62, 0, 0.12);
+        }
+
+        .dish-card h3 {
+            font-size: 22px;
+            color: #6b3e00;
+            margin-bottom: 8px;
+            flex-grow: 1;
+        }
+
+        .dish-card p {
+            font-size: 15px;
+            color: #4e3b0a;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .dish-card .price {
+            font-weight: 700;
+            font-size: 18px;
+            color: #8a4e00;
+            margin-bottom: 12px;
+        }
+
+        .dish-card .actions a {
+            text-decoration: none;
+            color: #6b3e00;
+            font-weight: 600;
+            margin-right: 15px;
+            transition: color 0.25s ease;
+            cursor: pointer;
+        }
+
+        .dish-card .actions a:hover {
+            color: #8a4e00;
+            text-decoration: underline;
+        }
+
+        /* Orders */
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .order-card {
+            background: #fff3c9;
+            border-radius: 14px;
+            box-shadow: 0 6px 12px rgba(107, 62, 0, 0.2);
+            padding: 18px 22px;
+            color: #5a4310;
+            transition: background-color 0.3s ease;
+        }
+
+        .order-card:hover {
+            background-color: #fcefa7;
+        }
+
+        .order-card p {
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .order-card strong {
+            font-weight: 700;
+        }
+
+        .order-card a {
+            display: inline-block;
+            margin-top: 8px;
+            text-decoration: none;
+            color: #6b3e00;
+            font-weight: 600;
+            border: 1.5px solid #6b3e00;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .order-card a:hover {
+            background-color: #6b3e00;
+            color: #fff9f0;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                height: auto;
+                padding: 15px 20px;
+                gap: 10px;
+            }
+
+            header h1 {
+                font-size: 20px;
+            }
+
+            header nav a {
+                margin-left: 0;
+                font-size: 16px;
+            }
+
+            .dish-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hotel Admin Dashboard</h1>
+        <nav>
+            <a href="/add_dish">Add New Dish</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Dish List</h2>
+            <div class="dish-grid">
+                {% for dish in dishes %}
+                <div class="dish-card">
+                    <img src="{{ url_for('static', filename='uploads/' + dish[5]) }}" alt="{{ dish[1] }} Image">
+                    <h3>{{ dish[1] }}</h3>
+                    <p>{{ dish[2] }}</p>
+                    <p class="price">₹{{ dish[3] }}</p>
+                    <div class="actions">
+                        <a href="/update_dish/{{ dish[0] }}">Update</a> | 
+                        <a href="/delete_dish/{{ dish[0] }}">Delete</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section>
+            <h2>Orders</h2>
+            <div class="orders-list">
+                {% for order in orders %}
+                <div class="order-card">
+                    <p><strong>Dish:</strong> {{ order[1] }}</p>
+                    <p><strong>Quantity:</strong> {{ order[2] }}</p>
+                    <p><strong>Customer:</strong> {{ order[3] }} ({{ order[4] }})</p>
+                    <a href="/delete_order/{{ order[0] }}">Delete Order</a>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Update Dish</title>
+    <style>
+        body {
+            background: url('https://images.unsplash.com/photo-1555992336-03a23c9b3e38') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #4b3a00;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 420px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #6b3e00;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #4b3a00;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        input[type="submit"] {
+            background-color: #6b3e00;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #8a4e00;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #6b3e00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Update Dish</h1>
+        <form action="/update_dish/{{ dish[0] }}" method="post" enctype="multipart/form-data">
+            <label for="name">Name:</label>
+            <input type="text" name="name" value="{{ dish[1] }}" required>
+
+            <label for="description">Description:</label>
+            <textarea name="description" rows="3">{{ dish[2] }}</textarea>
+
+            <label for="price">Price (₹):</label>
+            <input type="number" name="price" value="{{ dish[3] }}" required>
+
+            <label for="materials">Materials/Ingredients:</label>
+            <input type="text" name="materials" value="{{ dish[4] }}">
+
+            <label for="image">Dish Image: (leave blank to keep current)</label>
+            <input type="file" name="image">
+
+            <input type="submit" value="Update Dish">
+        </form>
+        <a href="/admin">← Back to Dashboard</a>
+    </div>
+</body>
+</html>

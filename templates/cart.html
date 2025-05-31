@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Place Your Order</title>
+    <style>
+        body {
+            background: #fff9f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4b3a00;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .order-container {
+            background: #fceabb;
+            max-width: 400px;
+            width: 100%;
+            padding: 30px 35px;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(107, 62, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #6b3e00;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 15px;
+            color: #6b3e00;
+        }
+
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 20px;
+            border: 1.8px solid #c9b59f;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #4b3a00;
+            background-color: #fff9f0;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        select:focus, input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #6b3e00;
+            box-shadow: 0 0 8px rgba(107, 62, 0, 0.35);
+            outline: none;
+            background-color: #fff;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            background-color: #6b3e00;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            letter-spacing: 0.8px;
+            box-shadow: 0 4px 12px rgba(107, 62, 0, 0.5);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #8a4e00;
+            box-shadow: 0 6px 16px rgba(138, 78, 0, 0.7);
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            font-weight: 600;
+            color: #6b3e00;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #8a4e00;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 450px) {
+            .order-container {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="order-container">
+        <h1>Place Your Order</h1>
+        <form action="/cart" method="post">
+            <label for="dish_id">Select Dish:</label>
+            <select name="dish_id" id="dish_id" required>
+                {% for dish in dishes %}
+                    <option value="{{ dish[0] }}">{{ dish[1] }} - ₹{{ dish[3] }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" value="1" min="1" required>
+
+            <label for="customer_name">Your Name:</label>
+            <input type="text" name="customer_name" id="customer_name" placeholder="Enter your name" required>
+
+            <label for="customer_phone">Phone Number:</label>
+            <input type="text" name="customer_phone" id="customer_phone" placeholder="Enter your phone number" required pattern="[0-9]{10}" title="Enter 10 digit phone number">
+
+            <input type="submit" value="Place Order">
+        </form>
+        <a href="/">← Back to Menu</a>
+    </div>
+</body>
+</html>

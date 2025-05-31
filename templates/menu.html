@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Bhojanalayu</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f9f1e7, #fbe8c4);
+            color: #4b3a00;
+            margin: 0;
+            padding: 20px 40px;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #d4b16a;
+            box-shadow: 0 2px 6px rgba(107, 62, 0, 0.1);
+        }
+
+        header h1 {
+            font-weight: 700;
+            font-size: 32px;
+            letter-spacing: 2px;
+            color: #7c5200;
+            text-shadow: 1px 1px 4px #f0d87d;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #7c5200;
+            margin-left: 20px;
+            padding: 10px 22px;
+            border: 2px solid #7c5200;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 5px transparent;
+        }
+
+        nav a:first-child {
+            margin-left: 0;
+        }
+
+        nav a:hover {
+            background-color: #7c5200;
+            color: #fff8e1;
+            box-shadow: 0 0 15px #d4b16a;
+            transform: scale(1.05);
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #7c5200;
+            text-align: center;
+            text-shadow: 1px 1px 2px #d4b16a;
+        }
+
+        .dish-card {
+            background: #fff8e1;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(124, 82, 0, 0.15);
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .dish-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(124, 82, 0, 0.3);
+            border-color: #d4b16a;
+        }
+
+        .dish-card img {
+            border-radius: 20px;
+            width: 160px;
+            height: 110px;
+            object-fit: cover;
+            box-shadow: 0 6px 12px rgba(124, 82, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .dish-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .dish-info {
+            flex: 1;
+            user-select: none;
+        }
+
+        .dish-info h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: #7c5200;
+            text-shadow: 0 1px 3px #f0d87d;
+            letter-spacing: 1.1px;
+        }
+
+        .dish-info p {
+            margin: 5px 0;
+            font-size: 16px;
+            line-height: 1.4;
+            color: #5a4a00;
+            text-shadow: 0 0 1px #fff8e1;
+        }
+
+        .dish-info p strong {
+            color: #a17f00;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 720px) {
+            body {
+                padding: 15px 20px;
+            }
+            header {
+                flex-direction: column;
+                gap: 15px;
+                border-bottom: none;
+            }
+            nav a {
+                margin-left: 10px;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+            .dish-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .dish-card img {
+                width: 100%;
+                height: auto;
+                border-radius: 16px;
+            }
+            .dish-info h3 {
+                font-size: 20px;
+            }
+            .dish-info p {
+                font-size: 14px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bhojanalay</h1>
+        <nav>
+            <a href="/login">Admin Login</a>
+            <a href="/cart">Place Order</a>
+        </nav>
+    </header>
+
+    <h2>Available Dishes</h2>
+
+    {% for dish in dishes %}
+    <div class="dish-card" tabindex="0" aria-label="Dish {{ dish[1] }}, price ₹{{ dish[3] }}">
+        <img src="{{ url_for('static', filename='uploads/' + dish[5]) }}" alt="Image of {{ dish[1] }}" />
+        <div class="dish-info">
+            <h3>{{ dish[1] }}</h3>
+            <p>{{ dish[2] }}</p>
+            <p><strong>Price:</strong> ₹{{ dish[3] }}</p>
+            <p><strong>Ingredients:</strong> {{ dish[4] }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</body>
+</html>
